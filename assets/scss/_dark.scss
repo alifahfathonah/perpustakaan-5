@@ -1,0 +1,58 @@
+// stylelint-disable declaration-no-important
+
+@mixin dark-mode {
+  &,
+  .modal-content,
+  .dropdown-menu,
+  .example-bg {
+    color: $dark-body-color;
+    background: $dark-body-bg;
+  }
+
+  .card,
+  .sidebar,
+  .topbar {
+    color: inherit;
+    background: $dark;
+  }
+
+  .text-body {
+    color: #afbdd1 !important;
+  }
+
+  .avatar-list-stacked .avatar {
+    box-shadow: 0 0 0 2px #222226;
+  }
+
+  .navbar-brand-logo {
+    filter: brightness(0) invert(1);
+  }
+
+  .form-fieldset {
+    border-color: transparent;
+  }
+
+  .form-control,
+  .form-select,
+  .form-check-input:not(:checked) {
+    background: transparent;
+    border-color: $dark-border-color;
+    color: inherit;
+  }
+
+  .input-group-text {
+    border-color: $dark-border-color;
+  }
+}
+
+@media not print {
+  .theme-dark {
+    @include dark-mode;
+  }
+}
+
+@media not print and (prefers-color-scheme: dark) {
+  .auto-theme-dark {
+    @include dark-mode;
+  }
+}

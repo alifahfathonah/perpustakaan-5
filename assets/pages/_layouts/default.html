@@ -1,0 +1,25 @@
+---
+layout: base
+---
+
+<div class="wrapper">
+	{% if page.sidebar %}
+		{% include layout/sidebar.html %}
+	{% endif %}
+
+	<div class="content">
+		{% include layout/topnav.html %}
+
+		{% unless page.sidebar %}
+			{% include layout/topmenu.html %}
+		{% endunless %}
+
+		<div class="content-page">
+			<main class="container{% if page.container-size %}-{{ page.container-size }}{% endif %} my-4 flex-fill">
+				{% include layout/page-title.html %}
+
+				{{ content }}
+			</main>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,9 @@
+<header class="topnav">
+	<div class="navbar navbar-expand-lg {% if page.topnav-dark %}navbar-dark bg-dark text-white{% else %}navbar-light{% endif %}{% if include.sticky %} navbar-sticky{% endif %}">
+		<div class="container{% if include.fluid %}-fluid{% endif %}">
+			{% include layout/navbar.html dark=page.topnav-dark menu-layout=page.menu-layout %}
+		</div>
+	</div>
+</header>
+
+
