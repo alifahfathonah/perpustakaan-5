@@ -35,13 +35,13 @@
     <!-- Styles -->
     <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                /* background-color: #fff;
+                color: #636b6f; */
                 font-family: 'Nunito';
                 font-weight: 200;
                 height: 100vh;
                 margin: 0;
-                background:url('assets/img/perpus.jpg') no-repeat center center fixed;
+                background:url('assets/img/5294.jpg') no-repeat center center fixed;
                 background-size:cover;
                 background-attachment: fixed;
                 background: alpha(opacity=40); 
@@ -49,7 +49,8 @@
             .transparent{
                 background:rgba(2, 2, 2, 0.5);
                 /* margin:0px auto; */
-                color:#000000;
+                /* background-color: #ffffff; */
+                color: #ffffff;
             }
             .full-height {
                 height: 100vh;
@@ -70,7 +71,8 @@
             .col-lg-4 {
                 text-align: center;
                 margin:0px auto;
-                top: 50px;
+                top: 200px;
+                /* margin-left:10px; */
             }
             .title {
                 font-size: 84px;

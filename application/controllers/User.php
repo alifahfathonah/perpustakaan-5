@@ -29,6 +29,7 @@ class user extends CI_Controller {
 		}else{
 
 			$data['content']		= $this->load->view('user','',TRUE);
+			$data['title_gmbr']		= "team.png";
 			$data['title']			= "Management User";
 			$this->load->view('main',$data);
 		}
@@ -67,7 +68,8 @@ class user extends CI_Controller {
 					'password'	=> $row->password,
 					'nama'		=> $row->nama,
 					'status'	=> $istatus,
-					'priv'		=> $ipriv
+					'priv'		=> $ipriv,
+					'privilege'	=> $row->priv
 				);
 	
 			}
@@ -77,5 +79,78 @@ class user extends CI_Controller {
 
 		echo json_encode($array_item);
 
+	}
+
+	public function simpan(){
+
+		$id				= $this->input->post('txt_id');
+		$username 		= $this->input->post('txt_user');
+		$pass			= $this->input->post('txt_pass');
+		$name			= $this->input->post('txt_name');
+		$priv			= $this->input->post('txt_priv');
+		$customFile		= $this->input->post('nameFile');
+		$now			= date('Y-m-d h:i:s');
+
+		$count			= strlen($pass);
+		if($count > 10){
+			$ipass		= $pass;
+		}else{
+			$ipass		= MD5($pass);
+		}
+
+		$data = array(
+
+			'username'		=> $username,
+			'password'		=> $ipass,
+			'nama'			=> $name,
+			'priv'			=> $priv,
+			'status'		=> 0,
+			'img'			=> $customFile,
+			'last_login'	=> null,
+			'create_date'	=> $now	
+
+		);
+
+		if(isset($_FILES['upload_form'])){		
+				
+		
+			$temp						= explode(".",$_FILES['upload_form']['name']);			
+			$filename 					= date('YmdHis');
+			$fix_filename 				= $filename.".".end($temp);
+			$config['upload_path']   	= './upload/';			
+			$config['allowed_types'] 	= 'jpg|png|jpeg';
+			$config['file_name'] 		= $filename;
+			$config['overwrite'] 		= true;
+	
+			$this->load->library('upload', $config);
+			
+			$this->upload->initialize($config);
+	
+			if($this->upload->do_upload('upload_form')){
+	
+				$data['img'] = $fix_filename;
+			}
+			else{
+				
+				echo $this->upload->display_errors();
+			}		
+		}
+
+		if($id == NULL) {   		
+			$result		= $this->User_mod->Insert($data);
+		}else{
+			$result		= $this->User_mod->Update($data,$id);
+		}
+
+
+
+	}
+
+	public function delete(){
+
+		$id			= $this->input->post('id');
+		$result 	= $this->User_mod->delete($id);
+
+		return $result;
 	}
 }
