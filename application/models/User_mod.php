@@ -30,4 +30,30 @@ class User_mod extends CI_model{
         $sp = "CALL getdatauser()";
         return $this->db->query($sp)->result();
     }
+
+    function insert($data){
+
+        $this->db->insert('tbl_user',$data);
+        
+    }
+
+    function update($data,$id){
+
+        $this->db->where('id',$id);
+        $this->db->update('tbl_user',$data);
+        
+    }
+
+    function delete($id){
+        $this->db->where('id',$id);
+        $this->db->delete('tbl_user');
+    }
+
+    function getmenu(){
+
+        $sp = "CALL getmenu()";
+        return $this->db->query($sp)->result();
+
+
+    }
 }

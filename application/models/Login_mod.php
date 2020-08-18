@@ -9,9 +9,10 @@ class Login_mod extends CI_model{
 
     function login($user,$pass){
 
+        $encrypted_mypassword = MD5($pass);
         $user   = $this->db->escape($user);
-        $pass   = $this->db->escape($pass);
 
-        return $this->db->query("SELECT * FROM tbl_user WHERE username=$user AND password=$pass")->result();
+
+        return $this->db->query("SELECT * FROM tbl_user WHERE username=$user AND password='$encrypted_mypassword'")->result();
     }
 }
