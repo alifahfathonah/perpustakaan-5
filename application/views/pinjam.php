@@ -78,7 +78,7 @@
 
                                         echo '<option value="0">- Select Anggota -</option>';
                                         foreach($row as $anggota){ ?>
-                                        <option value="<?=$anggota['no_anggota']?>"><?=$anggota['nama']?></option>
+                                        <option value="<?=$anggota['no_anggota']?>">(<?=$anggota['no_anggota']?>) <?=$anggota['nama']?></option>
                                     <?php } ?>                                    
                                     </select>
                                  </div>                                
@@ -95,75 +95,46 @@
                                         $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                                         echo '<option value="0">- Select Buku -</option>';
-                                        foreach($row as $anggota){ ?>
-                                        <option value="<?=$anggota['id']?>"><?=$anggota['judul']?></option>
+                                        foreach($row as $buku){ ?>
+                                        <option value="<?=$buku['id']?>"><?=$buku['judul']?> (<?=$buku['penulis1']?>)</option>
                                     <?php } ?>                                    
                                     </select>
                                  </div>                                
                             </div>
                             <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">Prodi</label></div>
+                                <div class="col-3"><label class="form-label">Pinjam Buku (II)</label></div>
                                 :
                                 <div class="col-8">
-                                    <select class="form-select" name="txt_prodi" id="txt_prodi">
-                                        <option value="0">- Select Prodi -</option>
+                                    <select class="form-select" name="txt_buku2" id="txt_buku2">
+                                    <?php 
+                                        $db = mysqli_connect("localhost", "root", "", "perpustakaan");
+                                        $sql = "SELECT * FROM tbl_buku";
+                                        $result = mysqli_query($db, $sql);
+                                        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+                                        echo '<option value="0">- Select Buku -</option>';
+                                        foreach($row as $buku){ ?>
+                                        <option value="<?=$buku['id']?>"><?=$buku['judul']?> (<?=$buku['penulis1']?>)</option>
+                                    <?php } ?>                                    
                                     </select>
-                                </div>
+                                 </div>                                
                             </div>
                             <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">Tanggal Lahir</label></div>
+                                <div class="col-3"><label class="form-label">Pinjam Buku (III)</label></div>
                                 :
                                 <div class="col-8">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><img alt='image' class='img-sm'src='<?php echo base_url(); ?>assets/img/flaticon/calendar1.png'></span>
-                                    </div>
-                                        <input type="date" id="txt_ttl" name="txt_ttl" class="form-control">
-                                    </div>                             
-                                </div>
-                            </div>
-                            <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">Alamat</label></div>
-                                :
-                                <div class="col-8">
-                                    <textarea class="form-control" name="txt_alamat" id="txt_alamat" rows="2" placeholder="Alamat"></textarea>                                
-                                </div>                                
-                            </div>                             
-                            <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">No. HP</label></div>
-                                :
-                                <div class="col-8">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><img alt='image' class='img-sm'src='<?php echo base_url(); ?>assets/img/flaticon/handphone.png'></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="No. HP" name="txt_hp" id="txt_hp" value="">
-                                    </div>
-                                </div>                         
-                            </div>
-                            <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">Email</label></div>
-                                :
-                                <div class="col-8">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><img alt='image' class='img-sm'src='<?php echo base_url(); ?>assets/img/flaticon/email.png'></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Email" name="txt_email" id="txt_email" value="">
-                                    </div>
-                                </div>                         
-                            </div>                                              
-                            <div class="input-group mb-1">                                
-                                <div class="col-3"><label class="form-label">Foto</label></div>
-                                :
-                                <div class="col-8">
-                                    <div class="form-file">
-                                    <input type="file" class="form-file-input" id="upload_form" name="upload_form">
-                                    <label class="form-file-label" >
-                                        <input type="text" class="form-control" for="upload_form" id="nameFile" name="nameFile">
-                                        <span class="form-file-button">Browse</span>
-                                    </label>
-                                    </div>
+                                    <select class="form-select" name="txt_buku3" id="txt_buku3">
+                                    <?php 
+                                        $db = mysqli_connect("localhost", "root", "", "perpustakaan");
+                                        $sql = "SELECT * FROM tbl_buku";
+                                        $result = mysqli_query($db, $sql);
+                                        $row = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+                                        echo '<option value="0">- Select Buku -</option>';
+                                        foreach($row as $buku){ ?>
+                                        <option value="<?=$buku['id']?>"><?=$buku['judul']?> (<?=$buku['penulis1']?>)</option>
+                                    <?php } ?>                                    
+                                    </select>
                                  </div>                                
                             </div>
                         </div>                  
@@ -199,7 +170,49 @@
 <script src="<?php echo base_url();?>assets/dist/js/jquery.min.js"></script>
 <script type='text/javascript'>
 $(document).ready(function(){
+
+    var base_url = window.location.origin + '/' + window.location.pathname.split ('/') [1] + '/';
+
     $("#loading").hide();
+
+    $('#btn_save').click(function(){
+
+        $("#loading").show();
+
+        var form = $('#form_pinjam').serialize();
+            
+        $.ajax({
+            url:base_url+"pinjam/simpan",
+            type:"post",
+            data: form,
+            success: function(data){
+                var obj = JSON.parse(data);
+                console.log(obj[0].result);
+                $("#txt_no").val(obj[0].result);
+                    
+                    // $.alert({
+                    //     title: 'Success!',
+                    //     content: 'Data Berhasil Disimpan!',
+                    // });
+                    // cancel()
+                    // $('#tabel_pinjam').DataTable().destroy();
+                    // get_data()
+                    $("#loading").hide();
+                    
+            },
+            error: function(){
+
+                $.alert({
+                    title: 'Failed!',
+                    content: 'Data Gagal Disimpan!',
+                });
+
+                $("#loading").hide();
+            }
+
+        });
+    });
+
 });
 
 function new_pinjam(){
@@ -208,6 +221,11 @@ function new_pinjam(){
     $('#form_pinjam')[0].reset();
     $('#modul_createedit').modal('show');
     document.getElementById("title-modal").innerHTML = "Create New Book Transaction";
+}
+
+function cancel(){
+    $('#form_pinjam')[0].reset();
+    $('#modul_createedit').modal('hide');
 }
 
 </script>

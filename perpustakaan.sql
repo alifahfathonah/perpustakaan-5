@@ -190,7 +190,8 @@ CREATE TABLE `tbl_no` (
 /*Data for the table `tbl_no` */
 
 insert  into `tbl_no`(`field`,`no`) values 
-('no_anggota','APS-2008-003');
+('no_anggota','APS-2008-003'),
+('no_transaksi','PERPUS2008009');
 
 /*Table structure for table `tbl_pinjam_d` */
 
@@ -203,10 +204,11 @@ CREATE TABLE `tbl_pinjam_d` (
   `cat_buku` int(11) DEFAULT NULL,
   `judul` varchar(100) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
+  `denda` int(11) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   `create_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_pinjam_d` */
 
@@ -225,9 +227,20 @@ CREATE TABLE `tbl_pinjam_h` (
   `create_date` datetime DEFAULT NULL,
   `create_user` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_pinjam_h` */
+
+insert  into `tbl_pinjam_h`(`id`,`no_transaksi`,`no_anggota`,`tgl_pinjam`,`tgl_akhir`,`status`,`total_denda`,`create_date`,`create_user`) values 
+(22,'PERPUS2008001','APS-2008-001','2020-08-18','2020-08-25',0,0,'2020-08-18 22:17:13','admin'),
+(23,'PERPUS2008002','APS-2008-002','2020-08-18','2020-08-25',0,0,'2020-08-18 22:18:47','admin'),
+(24,'PERPUS2008003','APS-2008-002','2020-08-18','2020-08-25',0,0,'2020-08-18 22:20:16','admin'),
+(25,'PERPUS2008004','APS-2008-002','2020-08-18','2020-08-25',0,0,'2020-08-18 22:21:14','admin'),
+(26,'PERPUS2008005','APS-2008-001','2020-08-18','2020-08-25',0,0,'2020-08-18 22:34:27','admin'),
+(27,'PERPUS2008006','APS-2008-002','2020-08-18','2020-08-25',0,0,'2020-08-18 22:36:34','admin'),
+(28,'PERPUS2008007','APS-2008-001','2020-08-18','2020-08-25',0,0,'2020-08-18 22:37:11','admin'),
+(29,'PERPUS2008008','APS-2008-002','2020-08-18','2020-08-25',0,0,'2020-08-18 22:38:53','admin'),
+(30,'PERPUS2008009','APS-2008-003','2020-08-18','2020-08-25',0,0,'2020-08-18 22:39:21','admin');
 
 /*Table structure for table `tbl_prodi` */
 
@@ -343,6 +356,42 @@ BEGIN
 		INNER JOIN tbl_menu b ON a.id_menu = b.id
 		INNER JOIN tbl_user c ON a.id_user = c.id
 		WHERE username=USER AND url=url) A ;
+
+	END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `savepinjambuku` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `savepinjambuku` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `savepinjambuku`(
+	IN no_transaksi VARCHAR(50),
+	IN tgl date,
+	IN anggota varchar(50),
+	IN buku1 varchar(50),
+	IN buku2 varchar(50),
+	IN buku3 varchar(50),
+	IN user varchar(50),
+	OUT result VARCHAR(50)
+    )
+BEGIN
+	
+		DECLARE counts INT(10) DEFAULT 0;
+		SELECT count(*) INTO counts FROM tbl_pinjam_d a INNER JOIN tbl_pinjam_h b ON
+		a.no_transaksi=b.no_transaksi WHERE b.no_anggota=anggota AND a.status=0;
+		
+		
+		INSERT INTO tbl_pinjam_h (no_transaksi,no_anggota,tgl_pinjam,tgl_akhir,status,total_denda,create_date,create_user)
+		VALUES (no_transaksi,anggota,tgl,DATE_ADD(CURDATE(), INTERVAL 7 DAY),0,0,NOW(),user);
+		
+		INSERT INTO tbl_pinjam_d (no_transaksi,id_buku,cat_buku,judul,status,denda,create_date,create_user)
+		select no_transaksi, a.*, user FROM (SELECT id,category,judul,0,null,NOW() FROM tbl_buku
+		WHERE id IN (buku1,buku2,buku3)) a;
+		
+		SELECT no_transaksi INTO result;
+	
 
 	END */$$
 DELIMITER ;
